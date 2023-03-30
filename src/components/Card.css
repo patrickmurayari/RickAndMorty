@@ -1,0 +1,22 @@
+.card {
+    border: 2.4px solid rgb(132, 139, 235);
+    border-radius: 4px;
+    margin: 40px;
+    padding: 4px;
+    width: 200px;
+    background-color: rgb(239, 241, 248);;
+}
+
+.card:hover{
+  border: 2.8px solid rgb(91, 100, 227);
+  width: 208px;
+  border-radius: 4px;
+  animation: logo-spin infinite 20s linear;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
