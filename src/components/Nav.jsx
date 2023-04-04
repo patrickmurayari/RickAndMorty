@@ -1,12 +1,13 @@
 import React from "react";
 import SearchBar from './SearchBar';
 import {Link} from 'react-router-dom'
-import "./Nav.css"
+import style from '../styles/Nav.module.css'
+// import "./Nav.css"
 
 export default function Nav (props) {
     
     return(
-        <div className="nav">
+        <div className={style.nav}>
             <Link to = "/about" >
                 <button>About</button>
             </Link>

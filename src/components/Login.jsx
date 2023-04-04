@@ -1,6 +1,6 @@
 import React from "react"; 
 import { useState } from "react";
-import "./Login.css";
+import style from '../styles/Login.module.css'
  
 export default function Login({loginAccess}) {
     // const Email = "pgmail.com@"
@@ -62,7 +62,7 @@ export default function Login({loginAccess}) {
 
     return (
         <form onSubmit={handleSubmit}>
-         <div className="login">
+         <div className={style.login}>
             <label>Email:</label>
             <input name="email" 
                    value={inputs.email} 
