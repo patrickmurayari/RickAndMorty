@@ -6,14 +6,18 @@ import Home from './components/Home.jsx';
 import Nav from './components/Nav.jsx';
 import Login from './components/Login.jsx';
 
-import {Routes , Route , useNavigate } from "react-router-dom"
+import {Routes , Route , useNavigate, useLocation } from "react-router-dom"
 import About from "./components/About.jsx";
 
 function App() {
-   
+   const Email = "patrickm@gmail.com"
+    const Password = "@Patr123"
+  
+
    const [characters,setCharacters] = useState([])
    const [access,setAccess] = useState(false)
    const navigate = useNavigate()
+   const location = useLocation()
 
    function onSearch(id) {
       axios
@@ -39,20 +43,29 @@ function App() {
       });
     } 
 
-    const loginAccess = () => {
-      setAccess(true)
-      navigate("/home")
+    const loginAccess = (inputs) => {
+      if(inputs.password === Password && inputs.email === Email){
+        setAccess(true)
+        navigate("/home")
+        return alert("BIEVENIDO A LA APP")
+      }
     }
 
+    const loginOut = () => {
+        setAccess(false)
+        navigate("/")
+    }
 
     useEffect(()=>{
-      !access && navigate("/")
-    })
+      !access && navigate("/");
+    }, [access])
 
 
    return (   
    <div>
-      <Nav onSearch={onSearch}/> 
+      {
+        location.pathname === "/"? null: <Nav loginOut={loginOut} onSearch={onSearch}/> 
+      } 
       <Routes> 
          <Route path='/' element={<Login loginAccess={loginAccess} /> }></Route>
          <Route path="/home" 
