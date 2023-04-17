@@ -9,7 +9,7 @@ export default function SearchBar(props) {
    return (
       <div>
          <input type='search' onChange={handleChange} value ={id}  />
-         <button onClick={()=>props.onSearch(id)}>Agregar</button>
+         <button onClick={()=>props.onSearch(id)}>Search</button>
       </div>
    );
 }

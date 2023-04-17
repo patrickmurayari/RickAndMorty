@@ -5,35 +5,45 @@ import React from 'react';
 import Home from './components/Home.jsx';
 import Nav from './components/Nav.jsx';
 import Login from './components/Login.jsx';
+import Favorites from './components/Favorites.jsx'
+import Cards from './components/Cards.jsx';
 
 import {Routes , Route , useNavigate, useLocation } from "react-router-dom"
+import { useDispatch } from 'react-redux';
+import { addCharacter, searchCharacter  } from './redux/action.js';
 import About from "./components/About.jsx";
 
 function App() {
-   const Email = "patrickm@gmail.com"
-    const Password = "@Patr123"
+  const Email = "patrickm@gmail.com"
+  const Password = "@Patr123"
   
 
    const [characters,setCharacters] = useState([])
    const [access,setAccess] = useState(false)
    const navigate = useNavigate()
    const location = useLocation()
+   const dispatch = useDispatch();
+
+
+   useEffect(()=> {
+    axios
+      .get(`http://localhost:3001/rickandmorty/characters`)
+      .then((results)=> {
+        console.log(":::1", results.data);
+        setCharacters([...results.data])
+        dispatch(addCharacter(results.data))
+
+    })
+   },[])
+
+
 
    function onSearch(id) {
       axios
-        .get(`https://rickandmortyapi.com/api/character/${id}`)
+        .get(`http://localhost:3001/rickandmorty/character/${id}`)
         .then(({ data }) => {
-          console.log(":::::", data);
-          if (data.name) {
-            let exist = characters.find((ch) => ch.id === data.id);
-            if (exist) {
-              alert("ya existe");
-            } else {
-              setCharacters((oldChars) => [...oldChars, data]);
-            }
-          } else {
-            window.alert("¡No hay personajes con este ID!");
-          } // .then(()=>{})
+          console.log(":::::2", data);
+          dispatch(searchCharacter(data))
         });
     }
 
@@ -69,9 +79,10 @@ function App() {
       <Routes> 
          <Route path='/' element={<Login loginAccess={loginAccess} /> }></Route>
          <Route path="/home" 
-                element={<Home onClose={onClose} characters={characters} />}
+                element={<Cards onClose={onClose} />}
                 ></Route>
          <Route path='/about' element={<About />}> </Route>
+         <Route path='/favorites' element={<Favorites onClose={onClose} />}> </Route>
       </Routes>
    </div>
    );
