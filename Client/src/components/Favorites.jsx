@@ -35,7 +35,7 @@ const Favorites = ({onClose}) => {
             <select name="order" 
                     defaultValue={"DEFAULT"}
                     onChange={handleOrder}>
-                <option value="DEFAULT" >Select Order</option>
+                <option value="DEFAULT" disabled="true" >Select Order</option>
                 <option value="Ascendente">Ascendente</option>
                 <option value="Descendente">Descendente</option>
             </select>
@@ -43,6 +43,7 @@ const Favorites = ({onClose}) => {
             <select name="filter" 
                     defaultValue={"DEFAULT"}
                     onChange={handleFilter}>
+                <option value="DEFAULT" disable="true">Select Filter</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Genderless">Genderless</option>

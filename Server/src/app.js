@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const logger = require('morgan')
 
-const routes = require('../routes/index')
+const routes = require('./routes/index.js')
 
 app.use(express.json())
 const urlencoded = express.urlencoded({extended : false})
@@ -17,6 +17,11 @@ app.use((req, res, next) => {
 
 app.use(logger("dev"))
 
-app.use('/', routes)
+app.use('/rickandmorty', routes)
+
+app.get("/", (req,res) => {
+    res.status(200).json({message : "in First server in Ecpress"})
+})
 
 module.exports = app 
+    

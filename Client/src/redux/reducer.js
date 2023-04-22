@@ -41,15 +41,15 @@ const  rootReducer = (state=initialState , {type ,payload}) => {
         case ADD_FAV :
             return {
                 ...state,
-                myFavorites : [...state.myFavoritesOrigin, payload],
-                myFavoritesOrigin : [...state.myFavoritesOrigin, payload]
+                myFavorites : payload,
+                myFavoritesOrigin : payload
             } 
         case REMOVE_FAV:
-            const removeFav = state.myFavoritesOrigin.filter((char) => char.id !== payload)
+            // const removeFav = state.myFavoritesOrigin.filter((char) => char.id !== payload)
             return {
                 ...state,
-                myFavorites: removeFav,
-                myFavoritesOrigin :removeFav
+                myFavorites: payload,
+                myFavoritesOrigin :payload
             }
         case FILTER:
             const genero = state.myFavoritesOrigin.filter(char => char.gender === payload)

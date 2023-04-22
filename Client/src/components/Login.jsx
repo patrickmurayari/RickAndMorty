@@ -52,6 +52,7 @@ export default function Login({loginAccess}) {
         e.preventDefault();
         const aux = Object.keys(errors)
         if (aux.length===0){
+            loginAccess(inputs);
             setInputs({
                 email:"",
                 password:""
@@ -61,9 +62,9 @@ export default function Login({loginAccess}) {
                 email:"",
                 password:""
             })
-            loginAccess(inputs);
+        } else {
+            return alert("ERROR")
         }
-        return alert("ERROR")
     }
 
     return (

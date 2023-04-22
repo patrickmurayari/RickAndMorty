@@ -7,6 +7,7 @@ import Nav from './components/Nav.jsx';
 import Login from './components/Login.jsx';
 import Favorites from './components/Favorites.jsx'
 import Cards from './components/Cards.jsx';
+import Detail from './components/Detail.jsx';
 
 import {Routes , Route , useNavigate, useLocation } from "react-router-dom"
 import { useDispatch } from 'react-redux';
@@ -14,8 +15,8 @@ import { addCharacter, searchCharacter  } from './redux/action.js';
 import About from "./components/About.jsx";
 
 function App() {
-  const Email = "patrickm@gmail.com"
-  const Password = "@Patr123"
+  // const Email = "patrickm@gmail.com"
+  // const Password = "@Patr123"
   
 
    const [characters,setCharacters] = useState([])
@@ -27,10 +28,10 @@ function App() {
 
    useEffect(()=> {
     axios
-      .get(`http://localhost:3001/rickandmorty/characters`)
+      .get(`http://localhost:3001/rickandmorty/character/all`)
       .then((results)=> {
-        console.log(":::1", results.data);
-        setCharacters([...results.data])
+        // console.log(":::1", results.data);
+        // setCharacters([...results.data])
         dispatch(addCharacter(results.data))
 
     })
@@ -42,7 +43,7 @@ function App() {
       axios
         .get(`http://localhost:3001/rickandmorty/character/${id}`)
         .then(({ data }) => {
-          console.log(":::::2", data);
+          // console.log(":::::2", data);
           dispatch(searchCharacter(data))
         });
     }
@@ -54,16 +55,29 @@ function App() {
     } 
 
     const loginAccess = (inputs) => {
-      if(inputs.password === Password && inputs.email === Email){
-        setAccess(true)
-        navigate("/home")
-        return alert("BIEVENIDO A LA APP")
-      }
+      axios.get(`http://localhost:3001/rickandmorty/login?password=${inputs.password}&email=${inputs.email}`)
+      .then(({data})=> {
+        // console.log(':::::::: ESTYO ADENTRO DE AXIOS')
+        // console.log(':::::::::', data.access);
+        if(data.access) {
+          navigate('/home');
+          return alert("Welcome to our App");
+        }else {
+          return alert("invalid user")
+        }
+      })
+
     }
 
     const loginOut = () => {
-        setAccess(false)
-        navigate("/")
+      axios.get(`http://localhost:3001/rickandmorty/login?password=1323&email=123`)
+      .then(({data})=> {
+        console.log(':::::::::', data.access);
+        if(!data.access) {
+          setAccess(data.access)
+          navigate('/');
+        }
+      })
     }
 
     useEffect(()=>{
@@ -83,6 +97,7 @@ function App() {
                 ></Route>
          <Route path='/about' element={<About />}> </Route>
          <Route path='/favorites' element={<Favorites onClose={onClose} />}> </Route>
+         <Route path='/detail/:id' element={<Detail />}> </Route>
       </Routes>
    </div>
    );
